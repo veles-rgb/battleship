@@ -1,3 +1,4 @@
+// ship.js
 class Ship {
     constructor(length) {
         this.length = length;
@@ -6,23 +7,19 @@ class Ship {
     }
 
     hit() {
-        if (this.timesHit < this.length) {
-            this.timesHit += 1;
-            this.hasSunk();
-        } else {
-            this.hasSunk();
-            return "This ship has sunk";
+        if (this.isSunk) {
+            return;
+        }
+
+        this.timesHit += 1;
+
+        if (this.timesHit === this.length) {
+            this.isSunk = true;
         }
     }
 
     hasSunk() {
-        if (this.timesHit === this.length) {
-            this.isSunk = true;
-            return true;
-        } else {
-            this.isSunk = false;
-            return false;
-        }
+        return this.isSunk;
     }
 }
 
