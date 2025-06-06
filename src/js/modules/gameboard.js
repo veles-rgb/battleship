@@ -6,8 +6,8 @@ class Gameboard {
         this.missedShots = [];
     }
 
-    placeShip(ship, cords, direction) {
-
+    placeShip(ship, [startX, startY], direction) {
+        const row = startX, column = startY;
     }
 
     receiveAttack(cords) {
