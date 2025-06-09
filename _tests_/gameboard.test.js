@@ -55,26 +55,71 @@ describe('Gameboard tests', () => {
     });
 
     test('receiveAttack sends hit() to the right ship', () => {
+        ship = new Ship(3);
+        board.placeShip(ship, [2, 2], 'horizontal');
+        board.receiveAttack([2, 2]);
 
+        expect(ship.timesHit).toBe(1);
     });
 
     test('receiveAttack records the coordinates of a missed shot if missed', () => {
+        ship = new Ship(3);
+        board.placeShip(ship, [0, 0], 'horizontal');
+        board.receiveAttack([1, 0]);
 
+        expect(board.missedShots[0]).toEqual([1, 0]);
     });
 
     test('receiveAttack cannot hit() the same spots more than once', () => {
+        ship = new Ship(3);
+        board.placeShip(ship, [0, 0], 'horizontal');
+        board.receiveAttack([0, 0]);
 
+        expect(board.receiveAttack([0, 0])).toBe(false);
     });
 
     test('board.missedShots returns an array of all missed shots', () => {
+        ship = new Ship(3);
+        board.placeShip(ship, [0, 0], 'horizontal');
+        board.receiveAttack([1, 0]);
+        board.receiveAttack([2, 0]);
+        board.receiveAttack([3, 0]);
 
+        expect(board.missedShots).toEqual([[1, 0], [2, 0], [3, 0]]);
     });
 
     test('allShipsSunk reports true if all ships isSunk', () => {
+        ship = new Ship(3);
+        let ship2 = new Ship(2);
+        let ship3 = new Ship(3);
+        // Place ships
+        board.placeShip(ship, [0, 0], 'horizontal');
+        board.placeShip(ship2, [1, 3], 'vertical');
+        board.placeShip(ship3, [5, 6], 'horizontal');
+        // Attack ship
+        board.receiveAttack([0, 0]);
+        board.receiveAttack([0, 1]);
+        board.receiveAttack([0, 2]);
+        // Attack ship 2
+        board.receiveAttack([1, 3]);
+        board.receiveAttack([2, 3]);
+        // Attack ship 3
+        board.receiveAttack([5, 6]);
+        board.receiveAttack([5, 7]);
+        board.receiveAttack([5, 8]);
 
+        expect(board.allShipsSunk()).toEqual(true);
     });
 
     test('allShipsSunk reports false if all ships are not sunk', () => {
+        ship = new Ship(3);
+        let ship2 = new Ship(2);
+        let ship3 = new Ship(3);
+        // Place ships
+        board.placeShip(ship, [0, 0], 'horizontal');
+        board.placeShip(ship2, [1, 3], 'vertical');
+        board.placeShip(ship3, [5, 6], 'horizontal');
 
+        expect(board.allShipsSunk()).toEqual(false);
     });
 });

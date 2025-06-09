@@ -33,12 +33,33 @@ class Gameboard {
     }
 
 
-    receiveAttack() {
+    receiveAttack([x, y]) {
+        // Check for attack or miss on coords
+        const coordsHit = this.hitShots.some(
+            (coords) => coords[0] === x && coords[1] === y
+        );
+        const coordsMissed = this.hitShots.some(
+            (coords) => coords[0] === x && coords[1] === y
+        );
 
+        // Don't receive attack if coords have been hit or missed already
+        if (coordsHit || coordsMissed) return false;
+
+        const target = this.grid[x][y];
+
+        // Determine if shot is a hit or miss if not hit or missed already
+        if (target === null) {
+            // Miss
+            this.missedShots.push([x, y]);
+        } else {
+            // Hit
+            target.hit();
+            this.hitShots.push([x, y]);
+        }
     }
 
     allShipsSunk() {
-
+        return this.ships.every((ship) => ship.isSunk);
     }
 }
 
