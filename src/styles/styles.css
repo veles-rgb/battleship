@@ -1,4 +1,120 @@
 /* styles.css */
+
+/* Imported Font  */
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+.special-elite-regular {
+    font-family: "Special Elite", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
-    background-color: rebeccapurple;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background-image: url('/src/images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    font-family: "Special Elite", system-ui;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+.board-container {
+    border: 2px solid white;
+}
+
+.board-container>h2 {
+    text-align: center;
+    background-color: black;
+}
+
+.gameboard {
+    border: 2px solid white;
+    display: grid;
+    grid-template-columns: repeat(10, 3rem);
+    grid-template-rows: repeat(10, 3rem);
+    gap: 2px;
+}
+
+.cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+    opacity: 0.8;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.cell.ship {
+    background-color: red;
+}
+
+.cell.miss {
+    background-color: grey;
+    color: black;
+}
+
+.cell.miss::after {
+    content: '.';
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.cell.hit {
+    background-color: red;
+}
+
+.cell.hit::after {
+    content: ".";
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    pointer-events: none;
+}
+
+@keyframes fire {
+    0% {
+        background-color: #e00;
+    }
+
+    50% {
+        background-color: #f80;
+    }
+
+    100% {
+        background-color: #e00;
+    }
+}
+
+.cell.sunk {
+    position: relative;
+    border: 2px solid white;
+    background-color: #e00;
+    animation: fire 0.8s infinite ease-in-out;
+    box-shadow: 0 0 6px rgba(255, 140, 0, 0.8),
+        0 0 12px rgba(255, 140, 0, 0.6);
+}
+
+.cell.sunk::after {
+    content: "x";
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    pointer-events: none;
 }
