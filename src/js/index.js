@@ -28,7 +28,7 @@ function updateRotateLabel() {
     rotateBtn.textContent = `Orientation: ${shipOrientation}`;
 }
 
-// Randomly place all computer ships
+// Randomly place computer ships
 function randomPlaceAllShips(board) {
     shipLengths.forEach(length => {
         let placed = false;
@@ -53,7 +53,6 @@ function startPlacementPhase() {
     human = new Player('human');
     enemy = new Player('computer');
 
-    // Place computer ships
     randomPlaceAllShips(enemy.gameboard);
 
     gameActive = false;
@@ -200,6 +199,17 @@ enemyGridContainer.addEventListener('click', (e) => {
     const cell = e.target.closest('.cell');
     if (!cell) return;
 
+    // Prevent repeat shots
+    if (
+        cell.classList.contains('hit') ||
+        cell.classList.contains('miss') ||
+        cell.classList.contains('sunk')
+    ) {
+        playerMsg.textContent = '❗ You already fired there.';
+        computerMsg.textContent = '';
+        return;
+    }
+
     const [x, y] = cell.dataset.coord.split(',').map(Number);
     const playerHit = enemy.gameboard.receiveAttack([x, y]);
     renderBoard(enemyGridContainer,
@@ -212,9 +222,10 @@ enemyGridContainer.addEventListener('click', (e) => {
 
     if (enemy.gameboard.allShipsSunk()) {
         playerMsg.textContent = '🏆 You win!';
+        computerMsg.textContent = '';
         modal.style.display = 'flex';
-        modalText.textContent = "You win! Play again?";
         gameActive = false;
+        modalText.textContent = 'You win! Play again?';
         return;
     }
 
@@ -232,9 +243,10 @@ enemyGridContainer.addEventListener('click', (e) => {
         : `🤖 Computer missed at [${cx},${cy}].`;
 
     if (human.gameboard.allShipsSunk()) {
-        computerMsg.textContent += ' 💀 You lose';
+        computerMsg.textContent = ' 💀 You lose';
+        playerMsg.textContent = "";
         modal.style.display = 'flex';
-        modalText.textContent = "You lose... Play again?";
+        modalText.textContent = 'You lose... Play again?';
         gameActive = false;
     }
 });
