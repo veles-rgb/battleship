@@ -51,15 +51,31 @@ class Gameboard {
         if (target === null) {
             // Miss
             this.missedShots.push([x, y]);
+            return false;
         } else {
             // Hit
             target.hit();
             this.hitShots.push([x, y]);
+            return true;
         }
     }
 
     allShipsSunk() {
         return this.ships.every((ship) => ship.isSunk);
+    }
+
+    getAvailableMoves() {
+        const attacked = new Set([
+            ...this.hitShots.map(([x, y]) => `${x},${y}`),
+            ...this.missedShots.map(([x, y]) => `${x},${y}`)
+        ]);
+        const moves = [];
+        for (let x = 0; x < 10; x++) {
+            for (let y = 0; y < 10; y++) {
+                if (!attacked.has(`${x},${y}`)) moves.push([x, y]);
+            }
+        }
+        return moves;
     }
 }
 
