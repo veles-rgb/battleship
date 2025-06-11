@@ -20,8 +20,19 @@
             <div class="gameboard" id="enemy-grid"></div>
         </div>
     </div>
-    <button id="restart-button">Start Game</button>
-    <div id="message-area"></div>
+    <div id="placement-controls">
+        <button id="rotate-btn">Rotation: horizontal</button>
+    </div>
+    <div id="message-area">
+        <span id="player-msg"></span>
+        <span id="computer-msg"></span>
+    </div>
+    <div id="startModal" class="modal">
+        <div class="modal-content">
+            <p>Start new game?</p>
+            <button id="start-btn">Start Game</button>
+        </div>
+    </div>
 </body>
 
 </html>
