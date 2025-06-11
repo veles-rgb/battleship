@@ -1,14 +1,7 @@
-/* styles.css */
-
-/* Imported Font  */
+/* Imported Font*/
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
-.special-elite-regular {
-    font-family: "Special Elite", system-ui;
-    font-weight: 400;
-    font-style: normal;
-}
-
+/* Base Layout */
 body {
     width: 100vw;
     height: 100vh;
@@ -17,16 +10,122 @@ body {
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    background-image: url('/src/images/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
+    background: url('/src/images/background.jpg') center/cover no-repeat;
     font-family: "Special Elite", system-ui;
+    color: white;
 }
 
+#message-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25rem;
+    height: 5rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.modal-content {
+    background-color: #111;
+    color: white;
+    padding: 2rem;
+    border: 2px solid #888;
+    border-radius: 1rem;
+    width: 20%;
+    text-align: center;
+    animation: pulseModal 2s ease-in-out infinite;
+}
+
+.modal-content p {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+@keyframes pulseModal {
+    0% {
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.6);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+    }
+
+    100% {
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* Controls */
+#start-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+    border-radius: 0.5rem;
+    background-color: #0a0;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    animation: pulseGreen 2s ease-in-out infinite;
+}
+
+#start-btn:hover {
+    cursor: pointer;
+}
+
+@keyframes pulseGreen {
+    0% {
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 24px rgba(0, 255, 0, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+    }
+}
+
+#rotate-btn {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+#rotate-btn:hover:not(:disabled) {
+    background-color: #555;
+}
+
+#rotate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Game Container Layout */
 #game-container {
     display: flex;
-    flex-direction: row;
     gap: 4rem;
 }
 
@@ -35,45 +134,48 @@ body {
 }
 
 .board-container>h2 {
-    text-align: center;
+    margin: 0;
+    padding: 0.5rem;
     background-color: black;
+    text-align: center;
 }
 
+/* Gameboard Grid */
 .gameboard {
-    border: 2px solid white;
     display: grid;
     grid-template-columns: repeat(10, 3rem);
     grid-template-rows: repeat(10, 3rem);
     gap: 2px;
+    border: 2px solid white;
+    user-select: none;
 }
 
+/* Cell Styles */
 .cell {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: black;
+    background-color: black;
     opacity: 0.8;
     border: 1px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.1s;
 }
 
+/* Placement Preview */
+.cell.preview {
+    background-color: rgba(0, 200, 0, 0.4);
+}
+
+.cell.invalid {
+    background-color: rgba(200, 0, 0, 0.4);
+}
+
+/* Ship & Shots */
 .cell.ship {
     background-color: red;
-}
-
-.cell.miss {
-    background-color: grey;
-    color: black;
-}
-
-.cell.miss::after {
-    content: '.';
-    font-size: 2rem;
-    font-weight: bold;
 }
 
 .cell.hit {
@@ -81,9 +183,22 @@ body {
 }
 
 .cell.hit::after {
-    content: ".";
+    content: "x";
+    position: absolute;
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 900;
+    color: white;
+    pointer-events: none;
+}
+
+.cell.miss {
+    background-color: grey;
+}
+
+.cell.miss::after {
+    content: ".";
+    position: absolute;
+    font-size: 2rem;
     color: black;
     pointer-events: none;
 }
@@ -103,18 +218,15 @@ body {
 }
 
 .cell.sunk {
-    position: relative;
-    border: 2px solid white;
-    background-color: #e00;
     animation: fire 0.8s infinite ease-in-out;
-    box-shadow: 0 0 6px rgba(255, 140, 0, 0.8),
-        0 0 12px rgba(255, 140, 0, 0.6);
+    border: 2px solid black;
 }
 
 .cell.sunk::after {
     content: "x";
+    position: absolute;
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 900;
     color: black;
     pointer-events: none;
 }
