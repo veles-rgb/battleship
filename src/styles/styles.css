@@ -15,6 +15,11 @@ body {
     color: white;
 }
 
+#title-h1 {
+    font-size: 3rem;
+    text-shadow: 2px 5px 5px #000000;
+}
+
 #message-area {
     display: flex;
     flex-direction: column;
@@ -24,9 +29,11 @@ body {
     height: 5rem;
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid white;
     font-size: 1.5rem;
     font-weight: 900;
     text-align: center;
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.5);
 }
 
 /* Modal Styles */
@@ -36,12 +43,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 1;
 }
 
 .modal-content {
-    background-color: #111;
+    background-color: #000000;
     color: white;
     padding: 2rem;
     border: 2px solid #888;
@@ -112,6 +119,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s, opacity 0.2s;
+    animation: pulseGreen 2s ease-in-out infinite;
 }
 
 #rotate-btn:hover:not(:disabled) {
@@ -131,6 +139,7 @@ body {
 
 .board-container {
     border: 2px solid white;
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.5);
 }
 
 .board-container>h2 {
