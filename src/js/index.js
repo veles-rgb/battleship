@@ -48,7 +48,7 @@ startBtn.addEventListener('click', () => {
     playerMsg.textContent = 'Place your ships.';
 });
 
-// Begin ship placement phase
+// Begin player ship placement
 function startPlacementPhase() {
     human = new Player('human');
     enemy = new Player('computer');
@@ -232,12 +232,16 @@ enemyGridContainer.addEventListener('click', (e) => {
     // Computer's turn
     const [cx, cy] = enemy.chooseRandomAttack(human.gameboard);
     const compHit = human.gameboard.receiveAttack([cx, cy]);
+    // If attack was a hit, record attack coords
+    enemy.recordAttackResult([cx, cy], compHit, human.gameboard);
+
     renderBoard(playerGridContainer,
         human.gameboard.grid,
         human.gameboard.hitShots,
         human.gameboard.missedShots,
         false
     );
+
     computerMsg.textContent = compHit
         ? `🤖 Computer hit at [${cx},${cy}]!`
         : `🤖 Computer missed at [${cx},${cy}].`;
