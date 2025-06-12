@@ -8,10 +8,8 @@ A browser-based implementation of the classic Battleship game, built with JavaSc
 - [Installation](#installation)
 - [Usage](#usage)
 - [How It Works](#how-it-works)
-- [Features](#features)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+- [Sources](#sources)
 
 ![Screenshot of Battleship JS](src/images/screenshot.png)
 
