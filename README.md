@@ -4,7 +4,7 @@ A browser-based implementation of the classic Battleship game, built with JavaSc
 
 ## Table of Contents
 
-- [Demo](#demo)
+- [Demo](https://veles-rgb.github.io/battleship/)
 - [Installation](#installation)
 - [Usage](#usage)
 - [How It Works](#how-it-works)
